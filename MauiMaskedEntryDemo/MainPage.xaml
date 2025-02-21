@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiMaskedEntryDemo.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MauiMaskedEntryDemo"
+    x:Name="this"
+    x:DataType="local:MainPage"
+    BindingContext="{Reference this}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,100,30,100" Spacing="25">
+
+            <Button
+                Clicked="OnDayNight"
+                HorizontalOptions="Start"
+                Text="Day/Night"
+                WidthRequest="300" />
+
+            <Label Text="Default Entry" />
+
+            <Entry
+                HorizontalOptions="Start"
+                Placeholder="Enter a 10-digit integer"
+                Text="{Binding MyNumber, Mode=TwoWay}"
+                WidthRequest="300" />
+
+            <Entry
+                HorizontalOptions="Start"
+                Placeholder="Enter a license plate (format AAA999)"
+                Text="{Binding MyLicensePlate, Mode=TwoWay}"
+                WidthRequest="300" />
+
+            <Label Text="Experimental Masked Entry" />
+
+            <local:MaskedEntry
+                HorizontalOptions="Start"
+                MaxLength="10"
+                Placeholder="Enter a 10-digit integer"
+                RegexMask="^[\d]{0,10}$"
+                WidthRequest="300" />
+
+            <local:MaskedEntry
+                HorizontalOptions="Start"
+                Placeholder="Enter a license plate (format AAA999)"
+                RegexMask="^([A-Za-z]{0,2}|[A-Za-z]{3}[\d]{0,3})$"
+                WidthRequest="300" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
