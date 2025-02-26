@@ -7,6 +7,8 @@ namespace MauiMaskedEntryDemo;
 /// </summary>
 public class LabelFormattedStringConverter : IMultiValueConverter
 {
+	const string unicodeCombiningLongVerticalOverlay = "\u20d2";
+
 	/// <summary>
 	/// Converts values describing Entry properties to a FormattedString that can be used to render a Label like an Entry.
 	/// </summary>
@@ -52,7 +54,7 @@ public class LabelFormattedStringConverter : IMultiValueConverter
 			}
 			if (isFocused)
 			{
-				formattedString.Spans.Add(new Span { Text = text.Substring(0, cursorPosition) + "\u20d2" + text.Substring(cursorPosition), TextColor = Colors.Black, FontFamily = fontFamily });
+				formattedString.Spans.Add(new Span { Text = text.Substring(0, cursorPosition) + unicodeCombiningLongVerticalOverlay + text.Substring(cursorPosition), TextColor = Colors.Black, FontFamily = fontFamily });
 				return formattedString;
 			}
 			formattedString.Spans.Add(new Span { Text = text, TextColor = textColor, FontFamily = fontFamily });
