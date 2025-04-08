@@ -27,7 +27,7 @@
                     IsVisible="{MultiBinding {Binding IsFocused, x:DataType=Entry, Source={Reference entry}},
                                              {Binding Text.Length},
                                              Converter={toolkit:MultiMathExpressionConverter},
-                                             ConverterParameter='!x and !x1'}"
+                                             ConverterParameter='!x1'}"
                     Text="{Binding Placeholder}"
                     TextColor="{Binding PlaceholderColor}"
                     VerticalTextAlignment="{Binding VerticalTextAlignment}" />
@@ -39,6 +39,7 @@
                                                  {Binding CursorPosition},
                                                  {Binding SelectionLength},
                                                  {Binding IsFocused},
+                                                 {Binding BlinkIndex, x:DataType=local:MaskedEntry, Source={Reference maskedEntry}},
                                                  {Binding IsReadOnly},
                                                  {Binding IsEnabled},
                                                  {Binding FontFamily},

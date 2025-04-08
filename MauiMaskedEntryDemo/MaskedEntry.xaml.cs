@@ -7,6 +7,34 @@ namespace MauiMaskedEntryDemo;
 /// </summary>
 public partial class MaskedEntry : ContentView, IEntry, IBorderStroke
 {
+	/// <summary>
+	/// Bindable property for <see cref="BlinkIndex"/>.
+	/// </summary>
+	public static readonly BindableProperty BlinkIndexProperty = BindableProperty.Create(nameof(BlinkIndex), typeof(int), typeof(MaskedEntry), 0);
+
+	/// <summary>
+	/// Gets or sets the blink index.
+	/// </summary>
+	public int BlinkIndex
+	{
+		get => (int)GetValue(BlinkIndexProperty);
+		set => SetValue(BlinkIndexProperty, value);
+	}
+
+	/// <summary>
+	/// Bindable property for <see cref="BlinkInterval"/>.
+	/// </summary>
+	public static readonly BindableProperty BlinkIntervalProperty = BindableProperty.Create(nameof(BlinkInterval), typeof(int), typeof(MaskedEntry), 700);
+
+	/// <summary>
+	/// Gets or sets the blink interval in milliseconds.
+	/// </summary>
+	public int BlinkInterval
+	{
+		get => (int)GetValue(BlinkIntervalProperty);
+		set => SetValue(BlinkIntervalProperty, value);
+	}
+
 	#region IEntry
 	/// <summary>
 	/// Bindable property for <see cref="CharacterSpacing"/>.
@@ -335,6 +363,8 @@ public partial class MaskedEntry : ContentView, IEntry, IBorderStroke
 		set => SetValue(RegexMaskProperty, value);
 	}
 
+	IDispatcherTimer? blinkTimer = null;
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MaskedEntry"/> class.
 	/// </summary>
@@ -384,6 +414,14 @@ public partial class MaskedEntry : ContentView, IEntry, IBorderStroke
 					break;
 			}
 		};
+
+		blinkTimer = this.Dispatcher.CreateTimer();
+		blinkTimer.Interval = TimeSpan.FromMilliseconds(BlinkInterval);
+		blinkTimer.Tick += (s, e) =>
+		{
+			BlinkIndex = (BlinkIndex + 1) % 2;
+		};
+		blinkTimer.Start();
 	}
 
 	/// <summary>

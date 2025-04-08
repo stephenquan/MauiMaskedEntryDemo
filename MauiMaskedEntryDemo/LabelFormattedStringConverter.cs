@@ -23,9 +23,10 @@ public class LabelFormattedStringConverter : IMultiValueConverter
 			&& values[2] is int cursorPosition
 			&& values[3] is int selectionLength
 			&& values[4] is bool isFocused
-			&& values[5] is bool isReadOnly
-			&& values[6] is bool isEnabled
-			&& values[7] is string fontFamily)
+			&& values[5] is int blinkIndex
+			&& values[6] is bool isReadOnly
+			&& values[7] is bool isEnabled
+			&& values[8] is string fontFamily)
 		{
 			string text = (values[0] is string _text) ? _text : "";
 			var formattedString = new FormattedString();
@@ -39,7 +40,7 @@ public class LabelFormattedStringConverter : IMultiValueConverter
 				formattedString.Spans.Add(new Span { Text = text, TextColor = textColor, FontFamily = fontFamily });
 				return formattedString;
 			}
-			if (selectionLength > 0)
+			if (isFocused && selectionLength > 0)
 			{
 				if (cursorPosition > 0)
 				{
@@ -52,9 +53,9 @@ public class LabelFormattedStringConverter : IMultiValueConverter
 				}
 				return formattedString;
 			}
-			if (isFocused)
+			if (isFocused && blinkIndex == 1)
 			{
-				formattedString.Spans.Add(new Span { Text = text.Substring(0, cursorPosition) + unicodeCombiningLongVerticalOverlay + text.Substring(cursorPosition), TextColor = Colors.Black, FontFamily = fontFamily });
+				formattedString.Spans.Add(new Span { Text = text.Substring(0, cursorPosition) + unicodeCombiningLongVerticalOverlay + text.Substring(cursorPosition), TextColor = textColor, FontFamily = fontFamily });
 				return formattedString;
 			}
 			formattedString.Spans.Add(new Span { Text = text, TextColor = textColor, FontFamily = fontFamily });
